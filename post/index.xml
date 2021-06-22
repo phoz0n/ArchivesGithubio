@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Phozon&#39;s docs</title>
+    <link>https://phoz0n.github.io/post/</link>
+    <description>Recent content in Posts on Phozon&#39;s docs</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 22 Jun 2021 13:22:50 +0200</lastBuildDate>
+    
+	<atom:link href="https://phoz0n.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>First post</title>
+      <link>https://phoz0n.github.io/post/mypost/</link>
+      <pubDate>Tue, 22 Jun 2021 13:22:50 +0200</pubDate>
+      
+      <guid>https://phoz0n.github.io/post/mypost/</guid>
+      <description>Some code bellow:
+@client.event async def on_message(message): if message.content.lower() == &amp;quot;ping&amp;quot;: await message.channel.send(&amp;quot;pong&amp;quot;) return  </description>
+    </item>
+    
+  </channel>
+</rss>
