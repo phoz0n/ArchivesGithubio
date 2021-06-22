@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<title>Memo virtualisation et conteneurs | Phozon&#39;s docs</title>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.54.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://phoz0n.github.io/css/index.css">
+<link rel="canonical" href="https://phoz0n.github.io/post/virtualisation/">
+<link rel="alternate" type="application/rss+xml" href="" title="Phozon&#39;s docs">
+
+<header>
+  
+    <a href="https://phoz0n.github.io/" class="title">Phozon&#39;s docs</a>
+  
+  
+</header>
+
+<article>
+  <header>
+    <h1>Memo virtualisation et conteneurs</h1>
+    <time datetime="2021-06-22T13:22:50&#43;02:00">June 22, 2021</time>
+  </header>
+  
+
+<h2 id="vagrant">Vagrant</h2>
+
+<p>Récuperer une box vagrant debian puis se connecter dedans:</p>
+
+<pre><code class="language-bash">vagrant init debian/stretch64
+vagrant up
+vagrant ssh
+</code></pre>
+
+<p>Note: Parfois il faut executer les commandes en root</p>
+
+<p>Pour éteindre la machine virtuelle et la supprimer:</p>
+
+<pre><code class="language-bash">vagrant halt
+vagrant destroy
+</code></pre>
+
+<h2 id="docker">Docker</h2>
+
+<pre><code class="language-bash">docker-compose up -d
+
+docker-compose scale repo=3
+
+docker-compose down
+
+docker ps -a
+</code></pre>
+
+</article>
+
+
+
+</html>

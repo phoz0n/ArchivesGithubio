@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<title>Secu android | Phozon&#39;s docs</title>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.54.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://phoz0n.github.io/css/index.css">
+<link rel="canonical" href="https://phoz0n.github.io/post/android/">
+<link rel="alternate" type="application/rss+xml" href="" title="Phozon&#39;s docs">
+
+<header>
+  
+    <a href="https://phoz0n.github.io/" class="title">Phozon&#39;s docs</a>
+  
+  
+</header>
+
+<article>
+  <header>
+    <h1>Secu android</h1>
+    <time datetime="2021-06-22T13:22:50&#43;02:00">June 22, 2021</time>
+  </header>
+  
+
+<h2 id="apktool">APKTOOL</h2>
+
+<p>Les fichiers APK sont des archives, on peut les décompresser avec apktool</p>
+
+<pre><code class="language-bash">apktool d monapp.apk
+</code></pre>
+
+<p>Ensuite on peut voir les permissions que demande l&rsquo;application dans le fichier AndroidManifest.xml</p>
+
+<h2 id="adb">ADB</h2>
+
+<p>Modification du PATH pour adb</p>
+
+<pre><code class="language-bash">export PATH=${PATH}:/home/phozon/Android/Sdk/tools:/home/phozon/Android/Sdk/platform-tools
+</code></pre>
+
+<p>Lister les devices avec adb</p>
+
+<pre><code class="language-bash">adb devices
+</code></pre>
+
+<p>Télécharger et installer un apk avec ADB</p>
+
+<p><a href="http://payatu.com/wp-content/uploads/2016/01/diva-beta.tar.gz">http://payatu.com/wp-content/uploads/2016/01/diva-beta.tar.gz</a></p>
+
+<pre><code class="language-bash">adb install /home/phozon/Downloads/diva-beta.apk 
+</code></pre>
+
+<p>Rentrer dans le shell de la VM android</p>
+
+<pre><code class="language-bash">adb shell
+</code></pre>
+
+<p>Si on veut spécifier une target:</p>
+
+<pre><code class="language-bash">adb -s 192.168.0.1:5555 shell
+```	
+Déposer un fichier dans la carte mémoire (une image)
+```bash
+adb push fsociety.jpg /sdcard/Pictures/fsociety.jpg
+</code></pre>
+
+<p>Récuperer le fichier APK d&rsquo;une application déjà installée
+Liste les applications déjà installées:</p>
+
+<pre><code class="language-bash">adb shell pm list packages
+</code></pre>
+
+<p>Afficher le chemin du fichier APK</p>
+
+<pre><code class="language-bash">adb shell pm path jakhar.aseem.diva
+</code></pre>
+
+<p>On fait pull pour récuperer le fichier APK et on lui indique le chemin distant</p>
+
+<pre><code class="language-bash">adb pull /data/app/jakhar.aseem.diva-1/base.apk ./diva_recup.apk
+</code></pre>
+
+<h2 id="convertir-un-apk-en-jar">Convertir un APK en JAR</h2>
+
+<p>Softs pour obtenir le code source d&rsquo;un APK
+Dex2jar
+<a href="https://github.com/pxb1988/dex2jar">https://github.com/pxb1988/dex2jar</a>
+JD-Gui
+<a href="http://jd.benow.ca/">http://jd.benow.ca/</a></p>
+
+<p>Envoyer le APK vers la kali :</p>
+
+<pre><code class="language-bash">scp -P 2222 diva-beta.apk vagrant@127.0.0.1:/home/vagrant
+</code></pre>
+
+<p>Pour faire un jar a partir d&rsquo;un APK:</p>
+
+<pre><code class="language-bash">d2j-dex2jar diva-beta.apk
+</code></pre>
+
+<p>On renvoit le .jar vers la machine host:</p>
+
+<pre><code class="language-bash">scp diva-beta-dex2jar.jar phozon@172.16.97.155:/home/phozon/Shared
+</code></pre>
+
+<h2 id="jd-gui-pour-lire-le-code-java">JD-GUI pour lire le code JAVA</h2>
+
+<p>Commande pour lancer jd-gui.jar</p>
+
+<pre><code class="language-bash">java --add-opens java.base/jdk.internal.loader=ALL-UNNAMED --add-opens jdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED -jar /home/phozon/Documents/0\ -\ Cours/secu\ android/jd-gui-1.4.0.jar
+</code></pre>
+
+<p>Ensuite on ouvre le fichier .jar dans jd-gui</p>
+
+<h2 id="envoyer-le-certificat-burp-avec-adb">Envoyer le certificat burp avec ADB</h2>
+
+<p>Push certificat avec ADB</p>
+
+<pre><code class="language-bash">adb push cacert.crt /mnt/sdcard/
+</code></pre>
+
+<h2 id="capture-du-traffic-avec-tcpdump">Capture du traffic avec TCPDUMP</h2>
+
+<p>capture tcpdump de tout le traffic de l&rsquo;android</p>
+
+<pre><code class="language-bash">tcpdump -i eth1 -w /tmp/capture.pcap	
+</code></pre>
+
+<h2 id="vulnérabilités">Vulnérabilités</h2>
+
+<p>Shared prefs</p>
+
+<p>Android peut utiliser des bases de données de type SQLite pour stocker des informations relatives à une application
+Aucun chiffrement n&rsquo;est prévu par défaut pour les données présentes en base</p>
+
+<p>Afficher les logs d&rsquo;une application spéficique</p>
+
+<pre><code class="language-bash">adb logcat | grep -F &quot;`adb shell ps | grep jakhar.aseem.diva | cut -c10-15`&quot;
+</code></pre>
+
+<p>Le cache du keyboard</p>
+
+<pre><code class="language-bash">/data/data/com.android.providers.userdictionary/databases/user_dict.db
+</code></pre>
+
+<p>Récuperer l&rsquo;utilisateur de l&rsquo;appli</p>
+
+<pre><code class="language-bash">adb shell ps
+</code></pre>
+
+<p>Récuperer le cotenu du presse papier d&rsquo;une appli</p>
+
+<pre><code class="language-bash">adb shell su u0_a60 service call clipboard 2 s16 jakhar.aseem.diva
+</code></pre>
+
+<p>2 pour get les infos
+s16 pour récuperer les strings</p>
+
+<p>Allow backup permission si l&rsquo;application n&rsquo;est pas sur false dans le AndroidManifest, alors allowBackup est à true par défaut</p>
+
+<p>faire une backup via ABD
+On spécifie le nom de l&rsquo;archive et le nom du paquet a backuper</p>
+
+<pre><code class="language-bash">adb backup -f jakhar.aseem.diva.ab -apk jakhar.aseem.diva
+</code></pre>
+
+<p>Conversion du  backup .ab en .tar pour l&rsquo;extraire.</p>
+
+<pre><code class="language-bash">dd if=jakhar.aseem.diva.ab bs=1 skip=24 | python -c &quot;import zlib,sys;sys.stdout.write(zlib.decompress(sys.stdin.read()))&quot; &gt; backup.tar
+</code></pre>
+
+<p>Extraction de l&rsquo;archive .tar, puis on a un dossier app/</p>
+
+<pre><code class="language-bash">tar xvf backup.tar
+</code></pre>
+
+<p>dans apps/jakhar.aseem.diva/sp/jakhar.aseem.diva_preferences.xml on retrouve mes préférences, mon login et password et le code pin que j&rsquo;ai définit dans l&rsquo;appli</p>
+
+<p>Convertir le .ab en .tar avec le tool Android Backup Extractor</p>
+
+<pre><code class="language-bash">java -jar abe.jar unpack jakhar.aseem.diva.ab backup.tar
+</code></pre>
+
+<p>Activity exportables dans le fichier AndroidManifest.xml</p>
+
+<pre><code class="language-bash">android:exported=&quot;true&quot;
+</code></pre>
+
+<p>On peut aussi les reconnaitres car elles disposent des balises intent filter</p>
+
+<p>Commande pour lancer directement une activity avec ADB:</p>
+
+<pre><code class="language-bash">adb shell am start -n jakhar.aseem.diva/.APICreds2Activity
+
+</code></pre>
+
+<p>Rentrer en mode débug dans une appli</p>
+
+<pre><code class="language-bash">adb shell ps
+adb forward tcp:3445 jdwp:2636
+jdb -attach localhost:3445
+</code></pre>
+
+<p>##Décompiler et recompiler un APK puis le signer
+Décompiler l&rsquo;apk</p>
+
+<pre><code class="language-bash">apktool d my-app.apk
+</code></pre>
+
+<p>Recompiler le nouveau apk</p>
+
+<pre><code class="language-bash">apktool b new-app.apk my-app/
+</code></pre>
+
+<p>Générer un nouveau certificat</p>
+
+<pre><code class="language-bash">keytool -genkey -v -keystore resign.keystore -alias NEW_APP -keyalg RSA 2048 -validity 10000
+</code></pre>
+
+<p>Ajouter le certificat sur le nouveau apk</p>
+
+<pre><code class="language-bash">jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore resign.keystore new-app.apk NEW_APP
+</code></pre>
+
+<p>Afficher le cert avec keytool</p>
+
+<pre><code class="language-bash">keytool -printcert -file CERT.RSA
+</code></pre>
+
+</article>
+
+
+
+</html>

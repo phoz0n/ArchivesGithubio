@@ -21,5 +21,59 @@
 @client.event async def on_message(message): if message.content.lower() == &amp;quot;ping&amp;quot;: await message.channel.send(&amp;quot;pong&amp;quot;) return  </description>
     </item>
     
+    <item>
+      <title>Memo NMAP</title>
+      <link>https://phoz0n.github.io/post/nmap/</link>
+      <pubDate>Tue, 22 Jun 2021 13:22:50 +0200</pubDate>
+      
+      <guid>https://phoz0n.github.io/post/nmap/</guid>
+      <description>Lister les adresses IP sur le réseau
+nmap -sC -sV -oA scan X.X.X.X nmap -sn X.X.X.X/XX | grep 172 | cut -d&amp;quot; &amp;quot; -f5  Scan fast du fichier scan.txt
+nmap -F -iL scan.txt  Scan UDP top 10
+nmap -sU --top-port 10 X.X.X.X  Scan de tous les ports
+nmap -p- X.X.X.X  Affiche les versions
+nmap -sV X.X.X.X  Affiche que les ports ouverts
+nmap --open X.X.X.X nmap -sC -sV -oA scan 192.</description>
+    </item>
+    
+    <item>
+      <title>Memo virtualisation et conteneurs</title>
+      <link>https://phoz0n.github.io/post/virtualisation/</link>
+      <pubDate>Tue, 22 Jun 2021 13:22:50 +0200</pubDate>
+      
+      <guid>https://phoz0n.github.io/post/virtualisation/</guid>
+      <description> Vagrant Récuperer une box vagrant debian puis se connecter dedans:
+vagrant init debian/stretch64 vagrant up vagrant ssh  Note: Parfois il faut executer les commandes en root
+Pour éteindre la machine virtuelle et la supprimer:
+vagrant halt vagrant destroy  Docker docker-compose up -d docker-compose scale repo=3 docker-compose down docker ps -a  </description>
+    </item>
+    
+    <item>
+      <title>Reverse PE</title>
+      <link>https://phoz0n.github.io/post/reverse/</link>
+      <pubDate>Tue, 22 Jun 2021 13:22:50 +0200</pubDate>
+      
+      <guid>https://phoz0n.github.io/post/reverse/</guid>
+      <description>Scylla est un tool pour récuperer les librairies du PE https://github.com/NtQuery/Scylla
+IOC Indicator of Compromission
+Process Hollowing Technique d&amp;rsquo;injection de code pour échapper à la détection</description>
+    </item>
+    
+    <item>
+      <title>Secu android</title>
+      <link>https://phoz0n.github.io/post/android/</link>
+      <pubDate>Tue, 22 Jun 2021 13:22:50 +0200</pubDate>
+      
+      <guid>https://phoz0n.github.io/post/android/</guid>
+      <description>APKTOOL Les fichiers APK sont des archives, on peut les décompresser avec apktool
+apktool d monapp.apk  Ensuite on peut voir les permissions que demande l&amp;rsquo;application dans le fichier AndroidManifest.xml
+ADB Modification du PATH pour adb
+export PATH=${PATH}:/home/phozon/Android/Sdk/tools:/home/phozon/Android/Sdk/platform-tools  Lister les devices avec adb
+adb devices  Télécharger et installer un apk avec ADB
+http://payatu.com/wp-content/uploads/2016/01/diva-beta.tar.gz
+adb install /home/phozon/Downloads/diva-beta.apk  Rentrer dans le shell de la VM android
+adb shell  Si on veut spécifier une target:</description>
+    </item>
+    
   </channel>
 </rss>

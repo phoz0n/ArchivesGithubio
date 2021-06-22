@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<title>Memo NMAP | Phozon&#39;s docs</title>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.54.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://phoz0n.github.io/css/index.css">
+<link rel="canonical" href="https://phoz0n.github.io/post/nmap/">
+<link rel="alternate" type="application/rss+xml" href="" title="Phozon&#39;s docs">
+
+<header>
+  
+    <a href="https://phoz0n.github.io/" class="title">Phozon&#39;s docs</a>
+  
+  
+</header>
+
+<article>
+  <header>
+    <h1>Memo NMAP</h1>
+    <time datetime="2021-06-22T13:22:50&#43;02:00">June 22, 2021</time>
+  </header>
+  <p>Lister les adresses IP sur le réseau</p>
+
+<pre><code class="language-bash">nmap -sC -sV -oA scan X.X.X.X
+nmap -sn X.X.X.X/XX | grep 172 | cut -d&quot; &quot; -f5
+</code></pre>
+
+<p>Scan fast du fichier scan.txt</p>
+
+<pre><code class="language-bash">nmap -F -iL scan.txt                                                        
+</code></pre>
+
+<p>Scan UDP top 10</p>
+
+<pre><code class="language-bash">nmap -sU --top-port 10 X.X.X.X 
+</code></pre>
+
+<p>Scan de tous les ports</p>
+
+<pre><code class="language-bash">nmap -p- X.X.X.X
+</code></pre>
+
+<p>Affiche les versions</p>
+
+<pre><code class="language-bash">nmap -sV X.X.X.X                                
+</code></pre>
+
+<p>Affiche que les ports ouverts</p>
+
+<pre><code class="language-bash">nmap --open X.X.X.X                          
+nmap -sC -sV -oA scan 192.168.56.104
+</code></pre>
+
+</article>
+
+
+
+</html>
